@@ -18,7 +18,7 @@ interface MusicPlayerState {
   currentSong: PlaylistItem | null;
 }
 
-export function MusicPlayer() {
+function MusicPlayer() {
   const [state, setState] = useState<MusicPlayerState>({
     playlist: [],
     currentSong: null,
@@ -27,11 +27,16 @@ export function MusicPlayer() {
   // Fetch playlist data from API
   useEffect(() => {
     fetch('https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist')
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error:${response.status}`);
+        }
+        return response.json();
+  })
       .then((data: PlaylistItem[]) => {
         setState({
           playlist: data,
-          currentSong: data[0] || null, // Set the first song as currently playing
+          currentSong: data[1] || null, // Set the second song as currently playing
         });
       })
       .catch((error) => console.error('Error fetching playlist:', error));
@@ -62,3 +67,5 @@ export function MusicPlayer() {
     </div>
   );
 }
+
+export default MusicPlayer;
