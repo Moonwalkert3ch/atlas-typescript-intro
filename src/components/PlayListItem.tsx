@@ -1,17 +1,19 @@
-import React from "react";
+import React from 'react';
 
-// Define the interface for the props
+// Define types for PlayListItem props
 interface PlayListItemProps {
   title: string;
   artist: string;
   songLength: string;
-  className?: string; // Optional prop
+  className?: string;
+  onClick: () => void;
 }
 
-const PlayListItem: React.FC<PlayListItemProps> = ({ title, artist, songLength, className }) => {
+export function PlayListItem({ title, artist, songLength, className = '', onClick }: PlayListItemProps) {
   return (
     <div
-      className={`flex flex-col justify-center p-4 relative ${className} bg-white hover:bg-light-yellow transition-colors duration-300`}
+      className={`flex flex-col justify-center p-4 relative ${className} bg-white hover:bg-light-yellow transition-colors duration-300 cursor-pointer`}
+      onClick={onClick}
     >
       <div className="flex flex-col">
         <p className="text-sm font-medium text-slate-500">{title}</p>
@@ -22,6 +24,4 @@ const PlayListItem: React.FC<PlayListItemProps> = ({ title, artist, songLength, 
       </p>
     </div>
   );
-};
-
-export default PlayListItem;
+}
