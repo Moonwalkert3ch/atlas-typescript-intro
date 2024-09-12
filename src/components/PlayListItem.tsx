@@ -1,15 +1,14 @@
-import React from 'react';
+// src/components/PlayListItem.tsx
 
-// Define types for PlayListItem props
 interface PlayListItemProps {
   title: string;
   artist: string;
-  songLength: string;
+  duration: string; // Ensure this matches the PlaylistItem duration
   className?: string;
   onClick: () => void;
 }
 
-export function PlayListItem({ title, artist, songLength, className = '', onClick }: PlayListItemProps) {
+export function PlayListItem({ title, artist, duration, className = '', onClick }: PlayListItemProps) {
   return (
     <div
       className={`flex flex-col justify-center p-4 relative ${className} bg-white hover:bg-light-yellow transition-colors duration-300 cursor-pointer`}
@@ -20,7 +19,7 @@ export function PlayListItem({ title, artist, songLength, className = '', onClic
         <p className="text-sm font-medium text-black">{artist}</p>
       </div>
       <p className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sm font-medium text-slate-500">
-        {songLength}
+        {duration}
       </p>
     </div>
   );

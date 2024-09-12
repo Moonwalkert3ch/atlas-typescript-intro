@@ -1,24 +1,30 @@
+// src/components/Playlist.tsx
 
 import { PlayListItem } from './PlayListItem';
+import usePlaylistData from '../hooks/usePlaylistData';
 
-// Define types for Playlist props
+interface PlaylistItem {
+  id: number;
+  title: string;
+  artist: string;
+  genre: string;
+  duration: string;
+  cover: string;
+}
+
 interface PlaylistProps {
-  items: {
-    id: string;
-    title: string;
-    artist: string;
-    songLength: string;
-  }[];
-  currentSong: {
-    id: string;
-    title: string;
-    artist: string;
-    songLength: string;
-  } | null;
-  onSongSelect: (song: { id: string; title: string; artist: string; songLength: string }) => void;
+  items: PlaylistItem[]; // Add this line to match the actual usage
+  currentSong: PlaylistItem | null;
+  onSongSelect: (song: PlaylistItem) => void;
 }
 
 export function Playlist({ items, currentSong, onSongSelect }: PlaylistProps) {
+  const { loading } = usePlaylistData();
+
+  if (loading) {
+    return <div>Loading playlist...</div>;
+  }
+
   return (
     <div className="flex w-1/2 flex-col md:flex-row bg-light-red border-t p-6 sm:w-full md:border-l md:border-t-0">
       <h2 className="mb-4 text-lg font-semibold text-black">Playlist</h2>
@@ -28,7 +34,7 @@ export function Playlist({ items, currentSong, onSongSelect }: PlaylistProps) {
             key={item.id}
             title={item.title}
             artist={item.artist}
-            songLength={item.songLength}
+            duration={item.duration}
             className={currentSong?.id === item.id ? 'bg-gray-200' : ''}
             onClick={() => onSongSelect(item)}
           />

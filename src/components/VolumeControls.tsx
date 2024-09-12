@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Slider from "@mui/material/Slider";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
 export function VolumeControl() {
   const [volume, setVolume] = useState<number>(50);
 
-  const handleVolumeChange = (event: Event, newValue: number | number[]) => {
+  const handleVolumeChange = (newValue: number | number[]) => {
     // Ensure newValue is a number
     if (typeof newValue === 'number') {
       setVolume(newValue);
@@ -20,7 +20,7 @@ export function VolumeControl() {
       {/* Slider Control */}
       <Slider
         value={volume}
-        onChange={handleVolumeChange}
+        onChange={(event, newValue) => handleVolumeChange(newValue)}
         aria-labelledby="volume-slider"
         min={0}
         max={100} // Set range from 0 to 100

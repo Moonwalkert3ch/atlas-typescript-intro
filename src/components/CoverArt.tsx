@@ -1,4 +1,3 @@
-import React from 'react';
 
 // Define types for the CoverArt props
 interface CoverArtProps {

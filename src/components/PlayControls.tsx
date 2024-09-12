@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface PlayControlsProps {
   onPrev: () => void;
@@ -7,44 +7,41 @@ interface PlayControlsProps {
   isLastSong: boolean;
   onShuffleToggle: () => void;
   isShuffle: boolean;
+  isPlaying: boolean;
+  onPlayToggle: () => void;
 }
 
 export function PlayControls({
-  onPrev, onNext, isFirstSong, isLastSong, onShuffleToggle, isShuffle
+  onPrev, onNext, isFirstSong, isLastSong, onShuffleToggle, isShuffle, isPlaying, onPlayToggle
 }: PlayControlsProps) {
   const [speed, setSpeed] = useState<number>(1);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   const handleSpeedChange = () => {
     setSpeed((prevSpeed) => (prevSpeed === 3 ? 1 : prevSpeed + 1));
-  };
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
   };
 
   return (
     <div className='mb-5 flex items-center justify-between'>
       {/* Speed Button */}
       <button 
-        className='inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm leading-5 font-medium transition-transform duration-200 ease-in-out transform hover:scale-110' 
-        onClick={handleSpeedChange}>
-        <span className='text-lg text-custom-text'>{speed}x</span>
+      className='inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm leading-5 font-medium transition-transform duration-200 ease-in-out transform hover:scale-110' 
+      onClick={handleSpeedChange}>
+      <span className='text-lg text-custom-text'>{speed}x</span>
       </button>
       {/* Prev Button */}
       <button 
-        className={`inline-flex h-10 w-10 items-center justify-center rounded-md text-sm leading-5 font-medium transition-transform duration-200 ease-in-out transform hover:scale-110 ${isFirstSong ? 'text-custom-text' : 'text-custom-text'}`}
-        onClick={onPrev}
-        disabled={isFirstSong}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-          <path d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
-        </svg>
+      className={`inline-flex h-10 w-10 items-center justify-center rounded-md text-sm leading-5 font-medium transition-transform duration-200 ease-in-out transform hover:scale-110 ${isFirstSong ? 'text-custom-text' : 'text-custom-text'}`}
+      onClick={onPrev}
+      disabled={isFirstSong}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
+      </svg>
       </button>
       {/* Play/Pause Button */}
       <button 
-        className="inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm leading-5 font-medium transition-transform duration-200 ease-in-out transform hover:scale-105 outline outline-1.5 outline-custom-text focus:outline" 
-        onClick={togglePlay}
+      className="inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm leading-5 font-medium transition-transform duration-200 ease-in-out transform hover:scale-105 outline outline-1.5 outline-custom-text focus:outline" 
+      onClick={onPlayToggle}
       >
         { isPlaying ? (
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-custom-text">

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CurrentlyPlaying } from './components/CurrentlyPlaying';
 import { Playlist } from './components/Playlist';
 
 // Define types for playlist item
 interface PlaylistItem {
-  id: string;
+  id: number; // Updated to match the API response
   title: string;
   artist: string;
-  songLength: string;
-  coverUrl: string;
+  genre: string; // Updated to match the API response
+  duration: string; // Updated to match the API response
+  cover: string;
 }
 
 // Define types for MusicPlayer state
@@ -32,7 +33,8 @@ export function MusicPlayer() {
           playlist: data,
           currentSong: data[0] || null, // Set the first song as currently playing
         });
-      });
+      })
+      .catch((error) => console.error('Error fetching playlist:', error));
   }, []);
 
   const handleSongSelect = (song: PlaylistItem) => {
@@ -45,7 +47,10 @@ export function MusicPlayer() {
   return (
     <div className="flex flex-col md:flex-row">
       <div className="flex-1 md:w-1/3">
-        <CurrentlyPlaying song={state.currentSong} />
+        <CurrentlyPlaying
+          song={state.currentSong}
+          playlist={state.playlist} // Pass the playlist here
+        />
       </div>
       <div className="flex-1 md:w-2/3">
         <Playlist
